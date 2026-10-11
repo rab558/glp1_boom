@@ -1,0 +1,51 @@
+file,column,type,description
+drugs_overview.csv,generic_name,string,Generic (INN) drug name
+drugs_overview.csv,brand_names,string,"Brand names, '; ' separated"
+drugs_overview.csv,manufacturer,string,Primary manufacturer
+drugs_overview.csv,indication,string,Approved or investigational indication
+drugs_overview.csv,fda_first_approval_date,date,First FDA approval date (empty if investigational)
+drugs_overview.csv,is_investigational,boolean,True if not yet FDA-approved
+drugs_overview.csv,drug_class,string,Mechanism class
+adverse_events.csv,safetyreportid,string,FDA FAERS unique report ID
+adverse_events.csv,generic_name,string,Mapped generic drug name
+adverse_events.csv,brand_queried,string,Brand name used in FDA query
+adverse_events.csv,receive_date,datetime,Date FDA received the report
+adverse_events.csv,country,string,ISO-2 country code where event occurred
+adverse_events.csv,serious,boolean,FDA seriousness flag
+adverse_events.csv,seriousness_death,boolean,Death outcome reported
+adverse_events.csv,seriousness_lifethreatening,boolean,Life-threatening flag
+adverse_events.csv,seriousness_hospitalization,boolean,Hospitalization flag
+adverse_events.csv,seriousness_disabling,boolean,Disability flag
+adverse_events.csv,patient_age,float,Patient age (numeric)
+adverse_events.csv,patient_age_unit,string,Year/Month/Decade etc.
+adverse_events.csv,patient_sex,string,Male / Female / Unknown
+adverse_events.csv,patient_weight_kg,float,Patient weight in kg if reported
+adverse_events.csv,reaction,string,MedDRA preferred term reaction
+adverse_events.csv,reaction_outcome,string,Recovery status text
+adverse_events_summary.csv,report_count,int,"Unique reports for (drug, reaction)"
+adverse_events_summary.csv,pct_serious,float,Fraction flagged serious
+adverse_events_summary.csv,pct_hospitalization,float,Fraction with hospitalization
+adverse_events_summary.csv,pct_death,float,Fraction with death outcome
+adverse_events_summary.csv,median_age,float,Median patient age
+adverse_events_summary.csv,pct_female,float,Fraction female
+clinical_trials.csv,nct_id,string,ClinicalTrials.gov registry ID
+clinical_trials.csv,brief_title,string,Trial title
+clinical_trials.csv,overall_status,string,Trial status
+clinical_trials.csv,start_date,date,Trial start
+clinical_trials.csv,completion_date,date,Trial completion (planned or actual)
+clinical_trials.csv,phase,string,Phase 1 / 2 / 3 / 4
+clinical_trials.csv,study_type,string,Interventional / Observational
+clinical_trials.csv,enrollment,int,Planned/actual enrollment count
+clinical_trials.csv,conditions,string,Conditions studied
+clinical_trials.csv,lead_sponsor,string,Lead sponsor name
+stock_prices.csv,date,date,Trading day
+stock_prices.csv,ticker,string,LLY or NVO
+stock_prices.csv,open/high/low/close,float,Daily OHLC prices (USD)
+stock_prices.csv,adj_close,float,Split/dividend adjusted close
+stock_prices.csv,volume,int,Trading volume
+search_trends.csv,date,date,Week beginning date
+search_trends.csv,geo,string,WORLD or ISO-2 country code
+search_trends.csv,term,string,Search term
+search_trends.csv,search_interest,int,Google Trends 0-100 relative interest
+wikipedia_summaries.csv,summary,string,Wikipedia intro paragraph
+wikipedia_summaries.csv,image_url,string,Lead image URL
