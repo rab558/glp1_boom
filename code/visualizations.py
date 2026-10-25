@@ -19,7 +19,8 @@ ozempic_total_spending_trend = duckdb.sql("""SELECT year, brand_name, total_spen
                                 FROM medicare_part_d
                                 WHERE brand_name = 'Ozempic'""").df()
 
-sns.lineplot(ozempic_total_spending_trend, x='year', y = 'total_spending')
+sns.lineplot(ozempic_total_spending_trend, x='year', y = 'total_spending', marker = "o")
+
 plt.xlabel('Year')
 plt.ylabel('Total Spending (in tens of billions)')
 plt.title('Total Medicare Spending on Ozempic from 2018 to 2022')
@@ -32,7 +33,8 @@ ozempic_avg_spending_per_dosage_unit = duckdb.sql("""SELECT year, brand_name, av
                                 FROM medicare_part_d
                                 WHERE brand_name = 'Ozempic'""").df()
 
-sns.lineplot(ozempic_avg_spending_per_dosage_unit, x='year', y = 'avg_spending_per_dosage_unit')
+sns.lineplot(ozempic_avg_spending_per_dosage_unit, x='year', y = 'avg_spending_per_dosage_unit', marker = "o")
+
 plt.xlabel('Year')
 plt.ylabel('Average Spending per Dose of Ozempic')
 plt.title('Average Spending per Dose of Ozempic from 2018 to 2022')
@@ -47,7 +49,7 @@ semaglutide_total_spending_trend = duckdb.sql("""SELECT year, generic_name, SUM(
                                 GROUP BY year, generic_name
                                 ORDER BY year""").df()
 
-sns.lineplot(semaglutide_total_spending_trend, x='year', y = 'sum_total_spending')
+sns.lineplot(semaglutide_total_spending_trend, x='year', y = 'sum_total_spending', marker='o')
 
 plt.xlabel('Year')
 plt.ylabel('Total Spending (in billions)')
@@ -64,9 +66,61 @@ semaglutide_avg_cost_per_dose_trend = duckdb.sql("""SELECT year, generic_name, M
                                 GROUP BY year, generic_name
                                 ORDER BY year""").df()
 
-sns.lineplot(semaglutide_avg_cost_per_dose_trend, x='year', y = 'avg_spending')
+sns.lineplot(semaglutide_avg_cost_per_dose_trend, x='year', y = 'avg_spending', marker = "o")
 
 plt.xlabel('Year')
 plt.ylabel('Average Spending on One Dose of Semaglutide')
 plt.title('Average Spending on One Dose of Semaglutide from 2018 to 2022')
 plt.show()        
+
+# vis 5
+# GLP-1 spending as a percentage of total medicare part D spending
+
+glp_1_percentage_total = duckdb.sql("""
+    SELECT
+        year,
+
+        SUM(CASE
+            WHEN generic_name IN (
+                'Semaglutide',
+                'Tirzepatide',
+                'Dulaglutide',
+                'Liraglutide',
+                'Exenatide',
+                'Lixisenatide'
+            )
+            THEN total_spending
+            ELSE 0
+        END) AS glp1_spending,
+
+        SUM(total_spending) AS total_part_d_spending,
+
+        100.0 * SUM(CASE
+            WHEN generic_name IN (
+                'Semaglutide',
+                'Tirzepatide',
+                'Dulaglutide',
+                'Liraglutide',
+                'Exenatide',
+                'Lixisenatide'
+            )
+            THEN total_spending
+            ELSE 0
+        END) / SUM(total_spending) AS glp1_percentage
+
+    FROM medicare_part_d
+    GROUP BY year
+    ORDER BY year
+""").df()
+
+sns.lineplot(glp_1_percentage_total, x='year', y='glp1_percentage', marker='o')
+
+plt.xlabel('Year')
+plt.ylabel('Share of Total Part D Spending (%)')
+plt.title('GLP-1 Share of Medicare Part D Spending (2016–2024)')
+
+plt.xticks(range(2016, 2025))
+plt.ylim(bottom=0)
+plt.grid(alpha=0.3)
+
+plt.show()
