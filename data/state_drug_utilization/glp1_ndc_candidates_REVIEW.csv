@@ -1,0 +1,153 @@
+NDC,Product Name,product,ingredient,manufacturer,category
+00024574502,ADLYXIN 10,Adlyxin,Lixisenatide,Sanofi,core
+00024574502,ADLYXIN   ,Adlyxin,Lixisenatide,Sanofi,core
+00024574702,ADLYXIN 20,Adlyxin,Lixisenatide,Sanofi,core
+00024574702,ADLYXIN   ,Adlyxin,Lixisenatide,Sanofi,core
+00310652004,BYDUREON  ,Bydureon,Exenatide,AstraZeneca,core
+00310652004,BYDUREON 2,Bydureon,Exenatide,AstraZeneca,core
+00310652004,Bydureon 2,Bydureon,Exenatide,AstraZeneca,core
+00310653001,BYDUREON P,Bydureon,Exenatide,AstraZeneca,core
+00310653001,BYDUREON 2,Bydureon,Exenatide,AstraZeneca,core
+00310653001,Bydureon P,Bydureon,Exenatide,AstraZeneca,core
+00310653004,BYDUREON P,Bydureon,Exenatide,AstraZeneca,core
+00310653004,Bydureon P,Bydureon,Exenatide,AstraZeneca,core
+00310653004,BYDUREON 2,Bydureon,Exenatide,AstraZeneca,core
+00310654001,BYDUREON B,Bydureon,Exenatide,AstraZeneca,core
+00310654004,BYDUREON B,Bydureon,Exenatide,AstraZeneca,core
+66780021904,BYDUREON  ,Bydureon,Exenatide,AstraZeneca,core
+00310651201,BYETTA    ,Byetta,Exenatide,AstraZeneca,core
+00310651201,Byetta 250,Byetta,Exenatide,AstraZeneca,core
+00310651201,BYETTA 250,Byetta,Exenatide,AstraZeneca,core
+00310651201,BYETTA 5 M,Byetta,Exenatide,AstraZeneca,core
+00310652401,BYETTA    ,Byetta,Exenatide,AstraZeneca,core
+00310652401,Byetta 250,Byetta,Exenatide,AstraZeneca,core
+00310652401,BYETTA 250,Byetta,Exenatide,AstraZeneca,core
+00310652401,BYETTA 10 ,Byetta,Exenatide,AstraZeneca,core
+66780021007,BYETTA (EX,Byetta,Exenatide,AstraZeneca,core
+66780021007,BYETTA    ,Byetta,Exenatide,AstraZeneca,core
+66780021201,BYETTA (EX,Byetta,Exenatide,AstraZeneca,core
+66780021201,BYETTA    ,Byetta,Exenatide,AstraZeneca,core
+00002145701,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002145701,MOUNJARO 1,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002145780,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002145780,MOUNJARO 1,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002146001,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002146001,MOUNJARO 1,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002146080,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002146080,MOUNJARO 1,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002147101,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002147101,MOUNJARO 1,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002147180,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002147180,MOUNJARO 1,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002148401,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002148401,MOUNJARO 7,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002148480,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002148480,MOUNJARO 7,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002149501,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002149501,MOUNJARO 5,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002149580,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002149580,MOUNJARO 5,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002150601,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002150601,MOUNJARO 2,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002150680,MOUNJARO  ,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002150680,MOUNJARO 2,Mounjaro,Tirzepatide,Eli Lilly,dual_gip_glp1
+00169413001,OZEMPIC 1M,Ozempic,Semaglutide,Novo Nordisk,core
+00169413001,OZEMPIC   ,Ozempic,Semaglutide,Novo Nordisk,core
+00169413001,OZEMPIC 1 ,Ozempic,Semaglutide,Novo Nordisk,core
+00169413013,OZEMPIC   ,Ozempic,Semaglutide,Novo Nordisk,core
+00169413013,OZEMPIC 1M,Ozempic,Semaglutide,Novo Nordisk,core
+00169413013,OZEMPIC 1 ,Ozempic,Semaglutide,Novo Nordisk,core
+00169413211,OZEMPIC 0.,Ozempic,Semaglutide,Novo Nordisk,core
+00169413211,OZEMPIC   ,Ozempic,Semaglutide,Novo Nordisk,core
+00169413212,OZEMPIC   ,Ozempic,Semaglutide,Novo Nordisk,core
+00169413212,OZEMPIC 0.,Ozempic,Semaglutide,Novo Nordisk,core
+00169413212,OZEMPIC (0,Ozempic,Semaglutide,Novo Nordisk,core
+00169413602,OZEMPIC   ,Ozempic,Semaglutide,Novo Nordisk,core
+00169413602,OZEMPIC 1M,Ozempic,Semaglutide,Novo Nordisk,core
+00169413602,OZEMPIC 1 ,Ozempic,Semaglutide,Novo Nordisk,core
+00169413611,OZEMPIC 1M,Ozempic,Semaglutide,Novo Nordisk,core
+00169413611,OZEMPIC 1 ,Ozempic,Semaglutide,Novo Nordisk,core
+00169413611,OZEMPIC   ,Ozempic,Semaglutide,Novo Nordisk,core
+00169418103,OZEMPIC 0.,Ozempic,Semaglutide,Novo Nordisk,core
+00169418113,OZEMPIC   ,Ozempic,Semaglutide,Novo Nordisk,core
+00169418113,OZEMPIC 0.,Ozempic,Semaglutide,Novo Nordisk,core
+00169418197,OZEMPIC   ,Ozempic,Semaglutide,Novo Nordisk,core
+00169477211,OZEMPIC 2M,Ozempic,Semaglutide,Novo Nordisk,core
+00169477211,OZEMPIC 2 ,Ozempic,Semaglutide,Novo Nordisk,core
+00169477211,OZEMPIC   ,Ozempic,Semaglutide,Novo Nordisk,core
+00169477212,OZEMPIC   ,Ozempic,Semaglutide,Novo Nordisk,core
+00169477212,OZEMPIC 2M,Ozempic,Semaglutide,Novo Nordisk,core
+00169477212,OZEMPIC 2 ,Ozempic,Semaglutide,Novo Nordisk,core
+00169430313,RYBELSUS  ,Rybelsus,Semaglutide,Novo Nordisk,core
+00169430313,RYBELSUS 3,Rybelsus,Semaglutide,Novo Nordisk,core
+00169430330,RYBELSUS  ,Rybelsus,Semaglutide,Novo Nordisk,core
+00169430330,RYBELSUS 3,Rybelsus,Semaglutide,Novo Nordisk,core
+00169430713,RYBELSUS  ,Rybelsus,Semaglutide,Novo Nordisk,core
+00169430713,RYBELSUS 7,Rybelsus,Semaglutide,Novo Nordisk,core
+00169430730,RYBELSUS  ,Rybelsus,Semaglutide,Novo Nordisk,core
+00169430730,RYBELSUS 7,Rybelsus,Semaglutide,Novo Nordisk,core
+00169431413,RYBELSUS  ,Rybelsus,Semaglutide,Novo Nordisk,core
+00169431413,RYBELSUS 1,Rybelsus,Semaglutide,Novo Nordisk,core
+00169431430,RYBELSUS  ,Rybelsus,Semaglutide,Novo Nordisk,core
+00169431430,RYBELSUS 1,Rybelsus,Semaglutide,Novo Nordisk,core
+00169280015,SAXENDA   ,Saxenda,Liraglutide,Novo Nordisk,core
+00169280015,SAXENDA 18,Saxenda,Liraglutide,Novo Nordisk,core
+00024576105,SOLIQUA 10,Soliqua,Insulin glargine / lixisenatide,Sanofi,combination
+00002143301,TRULICITY ,Trulicity,Dulaglutide,Eli Lilly,core
+00002143361,TRULICITY ,Trulicity,Dulaglutide,Eli Lilly,core
+00002143380,TRULICITY ,Trulicity,Dulaglutide,Eli Lilly,core
+00002143401,TRULICITY ,Trulicity,Dulaglutide,Eli Lilly,core
+00002143480,TRULICITY ,Trulicity,Dulaglutide,Eli Lilly,core
+00002223601,TRULICITY ,Trulicity,Dulaglutide,Eli Lilly,core
+00002223680,TRULICITY ,Trulicity,Dulaglutide,Eli Lilly,core
+00002318201,TRULICITY ,Trulicity,Dulaglutide,Eli Lilly,core
+00002318280,TRULICITY ,Trulicity,Dulaglutide,Eli Lilly,core
+00169406012,VICTOZA 2-,Victoza,Liraglutide,Novo Nordisk,core
+00169406012,Victoza 6M,Victoza,Liraglutide,Novo Nordisk,core
+00169406012,VICTOZA 6M,Victoza,Liraglutide,Novo Nordisk,core
+00169406012,VICTOZA   ,Victoza,Liraglutide,Novo Nordisk,core
+00169406013,VICTOZA 3-,Victoza,Liraglutide,Novo Nordisk,core
+00169406013,Victoza 6M,Victoza,Liraglutide,Novo Nordisk,core
+00169406013,VICTOZA 6M,Victoza,Liraglutide,Novo Nordisk,core
+00169406013,VICTOZA   ,Victoza,Liraglutide,Novo Nordisk,core
+00169450101,WEGOVY 1 M,Wegovy,Semaglutide,Novo Nordisk,core
+00169450101,WEGOVY 1MG,Wegovy,Semaglutide,Novo Nordisk,core
+00169450114,WEGOVY    ,Wegovy,Semaglutide,Novo Nordisk,core
+00169450114,WEGOVY 1MG,Wegovy,Semaglutide,Novo Nordisk,core
+00169450114,WEGOVY 1 M,Wegovy,Semaglutide,Novo Nordisk,core
+00169450501,WEGOVY 0.5,Wegovy,Semaglutide,Novo Nordisk,core
+00169450514,WEGOVY    ,Wegovy,Semaglutide,Novo Nordisk,core
+00169450514,WEGOVY 0.5,Wegovy,Semaglutide,Novo Nordisk,core
+00169451714,WEGOVY    ,Wegovy,Semaglutide,Novo Nordisk,core
+00169451714,WEGOVY 1.7,Wegovy,Semaglutide,Novo Nordisk,core
+00169452401,WEGOVY 2.4,Wegovy,Semaglutide,Novo Nordisk,core
+00169452414,WEGOVY    ,Wegovy,Semaglutide,Novo Nordisk,core
+00169452414,WEGOVY 2.4,Wegovy,Semaglutide,Novo Nordisk,core
+00169452501,WEGOVY 0.2,Wegovy,Semaglutide,Novo Nordisk,core
+00169452514,WEGOVY    ,Wegovy,Semaglutide,Novo Nordisk,core
+00169452514,WEGOVY 0.2,Wegovy,Semaglutide,Novo Nordisk,core
+00169291115,XULTOPHY 1,Xultophy,Insulin degludec / liraglutide,Novo Nordisk,combination
+00002015204,ZEPBOUND 2,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002015204,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002024304,ZEPBOUND 5,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002024304,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002245701,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002245701,ZEPBOUND 1,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002245780,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002245780,ZEPBOUND 1,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002246001,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002246080,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002246080,ZEPBOUND 1,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002247101,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002247180,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002247180,ZEPBOUND 1,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002248401,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002248480,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002248480,ZEPBOUND 7,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002249501,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002249580,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002249580,ZEPBOUND 5,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002250601,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002250601,ZEPBOUND 2,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002250680,ZEPBOUND  ,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
+00002250680,ZEPBOUND 2,Zepbound,Tirzepatide,Eli Lilly,dual_gip_glp1
