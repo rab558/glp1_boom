@@ -4,12 +4,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.express as px
+import us
+
 
 # import datasets 
 medicare_part_d = pd.read_csv('data/Medicare_Pt_D_spending/merged/part_d_drug_2016_2024.csv')
 print(medicare_part_d.head())
 obesity_by_state = pd.read_csv('data/2_2025-Obesity-by-state.csv')
-
+sdud = pd.read_csv("data/state_drug_utilization/state_year_glp1_vs_all.csv")
+glp1 = pd.read_csv("data/state_drug_utilization/glp1_state_product_year_type.csv")
+all_drugs = pd.read_csv("data/state_drug_utilization/all_drugs_state_year_type.csv")
 
 # -------------------------
 
@@ -178,4 +182,121 @@ fig.update_layout(
     margin=dict(l=0, r=0, t=50, b=0)
 )
 
-fig.write_html("obesity_by_state.html")
+fig.show()
+#fig.write_html("obesity_by_state.html")
+
+
+# does obesity correlate with higher GLP-1 drug utilization?
+# scatterplot
+
+obesity_by_state["StateCode"] = obesity_by_state["State"].apply(
+    lambda x: us.states.lookup(x).abbr if us.states.lookup(x) else None
+)
+obesity_by_state["Prevalence"] = pd.to_numeric(obesity_by_state["Prevalence"], errors="coerce")
+
+valid_states = [s.abbr for s in us.states.STATES] + ["DC"]
+
+sdud_2024 = sdud[
+    (sdud["Year"] == 2024) &
+    (sdud["State"].isin(valid_states))
+].copy()
+
+sdud_2024["GLP1_Share"] = (
+    sdud_2024["glp1_prescriptions_observed"] /
+    sdud_2024["all_prescriptions_observed"] * 100
+)
+
+df = obesity_by_state.merge(sdud_2024, left_on="StateCode", right_on="State")
+
+df = df.dropna(subset=["Prevalence", "GLP1_Share"])
+
+corr = df["Prevalence"].corr(df["GLP1_Share"])
+print("Correlation:", corr)
+
+fig = px.scatter(
+    df,
+    x="Prevalence",
+    y="GLP1_Share",
+    hover_name="State_x",
+    hover_data={
+        "Prevalence": True,
+        "GLP1_Share": True,
+        "glp1_prescriptions_observed": True,
+        "all_prescriptions_observed": True
+    },
+    labels={
+        "Prevalence": "Adult Obesity Prevalence (%)",
+        "GLP1_Share": "GLP-1 Share of Medicaid Prescriptions (%)",
+        "State_x": "State"
+    },
+    title=f"Obesity Prevalence vs. Medicaid GLP-1 Utilization Share (Correlation = {corr:.2f})",
+    trendline="ols"
+)
+
+fig.update_traces(marker=dict(size=10))
+fig.show()
+#fig.write_html("obesity_prevalence_vs_glp_utilization.html")
+
+
+# does state Medicare coverage for GLP-1 drugs drive use within that state?
+
+covered_states = [
+    "CA", "DE", "KS", "MA", "MI", "MN",
+    "MS", "NH", "PA", "RI", "VA", "WI"
+]
+
+# Filter to 2024, fee-for-service, obesity-indicated products
+glp1 = glp1[
+    (glp1["Year"] == 2024) &
+    (glp1["Utilization Type"] == "FFSU") &
+    (glp1["product"].isin(["Wegovy", "Saxenda", "Zepbound"]))
+]
+
+all_drugs = all_drugs[
+    (all_drugs["Year"] == 2024) &
+    (all_drugs["Utilization Type"] == "FFSU") &
+    (~all_drugs["State"].isin(["XX", "PR", "NC"]))
+].copy()
+
+rx = glp1.groupby("State")["prescriptions_observed"].sum()
+
+all_drugs["obesity_glp1_rx"] = (
+    all_drugs["State"].map(rx).fillna(0)
+)
+
+all_drugs = all_drugs[all_drugs["prescriptions_observed"] > 0]
+
+all_drugs["glp1_rate"] = (
+    all_drugs["obesity_glp1_rx"] /
+    all_drugs["prescriptions_observed"] * 100000
+)
+
+all_drugs["coverage"] = all_drugs["State"].apply(
+    lambda state: "Covered" if state in covered_states else "Not Covered"
+)
+
+plt.figure(figsize=(9, 6))
+
+sns.boxplot(
+    data=all_drugs,
+    x="coverage",
+    y="glp1_rate",
+    order=["Not Covered", "Covered"]
+)
+
+sns.stripplot(
+    data=all_drugs,
+    x="coverage",
+    y="glp1_rate",
+    order=["Not Covered", "Covered"],
+    color="black",
+    alpha=0.6,
+    jitter=True
+)
+
+plt.xlabel("Medicaid Coverage for Obesity GLP-1s")
+plt.ylabel("Prescriptions per 100k Medicaid Fee-for-Service Prescriptions")
+plt.title("GLP-1 Obesity-Drug Utilization by Medicaid Coverage (2024)")
+
+plt.tight_layout()
+plt.show()
