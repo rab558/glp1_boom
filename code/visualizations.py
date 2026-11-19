@@ -281,10 +281,9 @@ plt.legend()
 plt.show()
 
 # Novo Nordisk revenue composition (sums to 100%) from 2021 to 2025
-# Dark blue : Diabetes GLP-1
-# Light blue: Obesity GLP-1
-# Gray: All other sales
-# prices are in DKK billions
+# Blue: Diabetes GLP-1
+# Orange: Obesity GLP-1
+# Green: All other drugs
 
 
 brands = ["Ozempic", "Rybelsus", "Victoza"]
@@ -336,7 +335,6 @@ mix = pd.DataFrame(records).set_index("Year")
 
 ax = mix.plot.bar(
     stacked=True, figsize=(9, 5), width=0.65, rot=0,
-    color=["#000080", "#87CEEB", "#808080"],
 )
 
 glp1_share = mix["Diabetes GLP-1"] + mix["Obesity GLP-1"]
