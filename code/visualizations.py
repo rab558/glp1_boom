@@ -10,14 +10,41 @@ import us
 # import datasets 
 medicare_part_d = pd.read_csv('data/Medicare_Pt_D_spending/merged/part_d_drug_2016_2024.csv')
 print(medicare_part_d.head())
+
 obesity_by_state = pd.read_csv('data/2_2025-Obesity-by-state.csv')
+
 sdud = pd.read_csv("data/state_drug_utilization/state_year_glp1_vs_all.csv")
+
 glp1 = pd.read_csv("data/state_drug_utilization/glp1_state_product_year_type.csv")
+
 all_drugs = pd.read_csv("data/state_drug_utilization/all_drugs_state_year_type.csv")
+
+stocks = pd.read_csv(
+    "data/master_glp_1_2017_2026/stock_prices.csv",
+    parse_dates=["date"]
+).sort_values("date")
+
+folder = "data/NVO_financials_2021_2025"
+workbooks = {
+    2021: "Q4-2021-financial-workbook.xlsx",
+    2022: "Q4-2022-financial-data.xlsx",
+    2023: "q4-2023-financial-data.xlsx",
+    2024: "Q4-2024-financial-workbook.xlsx",
+    2025: "Q4-2025-financial-workbook.xlsx",
+}
+
+sales_rows = {
+    2021: (81, [111], 132),  # Full-year block of Sales Q4
+    2022: (13, [43, 45], 68),
+    2023: (15, [45, 47], 70),
+    2024: (15, [47, 49], 72),
+    2025: (15, [47, 49], 72),
+}
+
 
 # -------------------------
 
-# Ethan, 10/18
+# Ethan's code
 
 # vis 1
 # Total medicare spending on Ozempic over time
@@ -238,4 +265,128 @@ fig.show()
 #fig.write_html("obesity_prevalence_vs_glp_utilization.html")
 
 
-#
+# Novo Nordisk and Eli Lilly stock prices over time
+# measures the closing price 
+
+
+plt.figure(figsize=(10, 5))
+
+for ticker, history in stocks.groupby("ticker"):
+    plt.plot(history["date"], history["close"], label=ticker)
+
+plt.title("Stock prices of Eli Lilly and Novo Nordisk")
+plt.xlabel("Year")
+plt.ylabel("Closing price (USD)")
+plt.legend()
+plt.show()
+
+# Novo Nordisk revenue composition (sums to 100%) from 2021 to 2025
+# Dark blue : Diabetes GLP-1
+# Light blue: Obesity GLP-1
+# Gray: All other sales
+# prices are in DKK billions
+
+
+brands = ["Ozempic", "Rybelsus", "Victoza"]
+
+# U.S. sales column and Excel row numbers in brand order.
+us_sales_rows = {
+    2021: ("J", [77, 75, 79]),
+    2022: ("J", [9, 7, 11]),
+    2023: ("F", [9, 13, 11]),
+    2024: ("F", [9, 13, 11]),
+}
+
+records = []
+us_sales = {}
+for year, filename in workbooks.items():
+    sheet = "Sales Q4" if year == 2021 else "Sales - YTD"
+    columns = "D"
+    if year in us_sales_rows:
+        us_column, rows = us_sales_rows[year]
+        columns = f"D,{us_column}"
+
+    sales_data = pd.read_excel(
+        f"{folder}/{filename}", sheet_name=sheet, header=None, usecols=columns
+    )
+    sales = sales_data.iloc[:, 0]
+
+    if year in us_sales_rows:
+        us_sales[year] = sales_data.iloc[[row - 1 for row in rows], 1].tolist()
+
+for year, filename in workbooks.items():
+    sheet = "Sales Q4" if year == 2021 else "Sales - YTD"
+    sales = pd.read_excel(
+        f"{folder}/{filename}", sheet_name=sheet, header=None, usecols="D"
+    ).iloc[:, 0]
+
+    diabetes_row, obesity_rows, total_row = sales_rows[year]
+    diabetes = sales.iloc[diabetes_row - 1]
+    obesity = sum(sales.iloc[row - 1] for row in obesity_rows)
+    total = sales.iloc[total_row - 1]
+
+    records.append({
+        "Year": year,
+        "Diabetes GLP-1": 100 * diabetes / total,
+        "Obesity GLP-1": 100 * obesity / total,
+        "All other sales": 100 * (total - diabetes - obesity) / total,
+    })
+
+mix = pd.DataFrame(records).set_index("Year")
+
+ax = mix.plot.bar(
+    stacked=True, figsize=(9, 5), width=0.65, rot=0,
+    color=["#000080", "#87CEEB", "#808080"],
+)
+
+glp1_share = mix["Diabetes GLP-1"] + mix["Obesity GLP-1"]
+for position, share in enumerate(glp1_share):
+    ax.text(position, share + 1.5, f"{share:.1f}%",
+            ha="center", va="bottom", fontweight="bold")
+
+ax.set_title("Novo Nordisk annual revenue mix")
+ax.set_xlabel("Fiscal year")
+ax.set_ylabel("Share of company net sales (%)")
+ax.set_ylim(0, 100)
+ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.15),
+          ncol=3, frameon=False)
+
+plt.show()
+
+# US medicare claims vs company GLP-1 sales
+# medicare claims are for that specific drug (ozempic, victoza, etc.)
+# Index = 100 * (current year value/2021 value), so an index of 200 would be 2x and 50 would be 0.5x
+
+
+part_d_claims = (
+    medicare_part_d.assign(
+        brand_name=medicare_part_d["brand_name"].replace({
+            "Victoza 2-Pak": "Victoza",
+            "Victoza 3-Pak": "Victoza",
+        })
+    )
+    .groupby(["year", "brand_name"])["total_claims"]
+    .sum()
+    .unstack()
+    .loc[list(us_sales), brands]
+)
+
+us_sales = pd.DataFrame.from_dict(us_sales, orient="index", columns=brands)
+
+fig, axes = plt.subplots(1, 3, figsize=(11, 4), sharey=True)
+
+for ax, brand in zip(axes, brands):
+    ax.plot(part_d_claims.index, 100 * part_d_claims[brand] / part_d_claims.loc[2021, brand],
+            marker="o", label="Medicare Part D claims")
+    ax.plot(us_sales.index, 100 * us_sales[brand] / us_sales.loc[2021, brand],
+            marker="s", label="Novo U.S. sales")
+    ax.axhline(100, color="0.75", linewidth=1)
+    ax.set_title(brand)
+    ax.set_xticks(us_sales.index)
+
+axes[0].set_ylabel("Index (2021 = 100)")
+axes[-1].legend(frameon=False)
+fig.suptitle("Medicare Claims and Novo Nordisk U.S. sales")
+plt.show()
+
+# ---------------------------------------------------
