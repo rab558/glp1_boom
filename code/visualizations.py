@@ -107,8 +107,8 @@ semaglutide_avg_cost_per_dose_trend = duckdb.sql("""SELECT year, generic_name, M
 sns.lineplot(semaglutide_avg_cost_per_dose_trend, x='year', y = 'avg_spending', marker = "o")
 
 plt.xlabel('Year')
-plt.ylabel('Average Spending per One Dose of Semaglutide')
-plt.title('Average Spending per One Dose of Semaglutide from 2018 to 2022')
+plt.ylabel('Average Spending per Dose of Semaglutide')
+plt.title('Average Spending per Dose of Semaglutide from 2018 to 2022')
 plt.show()        
 
 # vis 5
