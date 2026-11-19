@@ -41,7 +41,11 @@ sales_rows = {
     2025: (15, [47, 49], 72),
 }
 
-
+median_income_state = pd.read_csv(
+    "data/median_family_income_by_state.csv",
+    skiprows=4,
+    thousands=",",
+)
 # -------------------------
 
 # Ethan's code
@@ -256,7 +260,7 @@ fig = px.scatter(
         "GLP1_Share": "GLP-1 Share of Medicaid Prescriptions (%)",
         "State_x": "State"
     },
-    title=f"Obesity Prevalence vs. Medicaid GLP-1 Utilization Share (Correlation = {corr:.2f})",
+    title=f"Obesity Prevalence vs. Medicaid GLP-1 Utilization Share",
     trendline="ols"
 )
 
@@ -288,7 +292,6 @@ plt.show()
 
 brands = ["Ozempic", "Rybelsus", "Victoza"]
 
-# U.S. sales column and Excel row numbers in brand order.
 us_sales_rows = {
     2021: ("J", [77, 75, 79]),
     2022: ("J", [9, 7, 11]),
@@ -386,5 +389,56 @@ axes[0].set_ylabel("Index (2021 = 100)")
 axes[-1].legend(frameon=False)
 fig.suptitle("Medicare Claims and Novo Nordisk U.S. sales")
 plt.show()
+
+
+# Median family income by state vs. number of GLP-1 share of Medicare prescriptions
+# do states with a higher median family income have a higher percentage of GLP-1 use?
+
+state_income = median_income_state.copy()
+
+state_income["StateCode"] = state_income["State"].map(state_codes)
+state_income = state_income[state_income["StateCode"].isin(valid_states)]
+
+state_claims = pd.read_csv(
+    "data/Medicare_Pt_D_Spending/2024/part_d_by_geography_and_drug.csv",
+    usecols=["Prscrbr_Geo_Lvl", "Prscrbr_Geo_Desc", "Gnrc_Name", "Tot_Clms"],
+)
+state_claims = state_claims[state_claims["Prscrbr_Geo_Lvl"].eq("State")]
+
+glp1_generics = [
+    "semaglutide", "tirzepatide", "dulaglutide",
+    "liraglutide", "exenatide", "lixisenatide",
+]
+is_glp1 = state_claims["Gnrc_Name"].str.strip().str.lower().isin(glp1_generics)
+
+claims_by_state = (
+    state_claims.assign(glp1_claims=state_claims["Tot_Clms"].where(is_glp1, 0))
+    .groupby("Prscrbr_Geo_Desc", as_index=False)[["glp1_claims", "Tot_Clms"]]
+    .sum()
+    .rename(columns={"Prscrbr_Geo_Desc": "State"})
+)
+claims_by_state["glp1_share"] = (
+    100 * claims_by_state["glp1_claims"] / claims_by_state["Tot_Clms"]
+)
+
+income_vs_claims = state_income.merge(claims_by_state, on="State")
+
+fig = px.scatter(
+    income_vs_claims,
+    x="Dollars",
+    y="glp1_share",
+    hover_name="State",
+    trendline="ols",
+    labels={
+        "Dollars": "Median family income, 2020–2024",
+        "glp1_share": "GLP-1 share of reported Part D claims (%)",
+    },
+    title="Median family income and Medicare GLP-1 claims by state (2024)",
+)
+
+fig.update_xaxes(tickprefix="$", tickformat=",.0f")
+fig.show()
+#fig.write_html("median_family_income_vs_medicare_claims.html")
+
 
 # ---------------------------------------------------
