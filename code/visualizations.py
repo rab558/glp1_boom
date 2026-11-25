@@ -440,5 +440,72 @@ fig.update_xaxes(tickprefix="$", tickformat=",.0f")
 fig.show()
 #fig.write_html("median_family_income_vs_medicare_claims.html")
 
+# Compare GLP-1 spending change as a result of prescription claim volume vs Gross spending per claim
+# basically, how did change in prescription claim volume change gross spending versus changes in gross spending per claim?
+
+results = duckdb.sql("""
+        WITH brands(brand, product, ingredient) AS (VALUES
+            ('Ozempic', 'Ozempic', 'Semaglutide'),
+            ('Mounjaro', 'Mounjaro', 'Tirzepatide'),
+            ('Rybelsus', 'Rybelsus', 'Semaglutide'),
+            ('Trulicity', 'Trulicity', 'Dulaglutide'),
+            ('Victoza 2-Pak', 'Victoza', 'Liraglutide'),
+            ('Victoza 3-Pak', 'Victoza', 'Liraglutide'),
+            ('Bydureon Bcise', 'Bydureon BCise', 'Exenatide Microspheres'),
+            ('Byetta', 'Byetta', 'Exenatide'),
+            ('Wegovy', 'Wegovy', 'Semaglutide'),
+            ('Zepbound', 'Zepbound', 'Tirzepatide'),
+            ('Saxenda', 'Saxenda', 'Liraglutide')
+        ), annual AS (
+            SELECT product, ingredient, y.year,
+                CASE WHEN count(d.brand_name) = count(DISTINCT b.brand)
+                    AND count(DISTINCT CASE WHEN d.brand_name IS NOT NULL THEN b.brand END)
+                        = count(DISTINCT b.brand)
+                    AND count(d.total_spending * d.total_claims) = count(DISTINCT b.brand)
+                    THEN sum(d.total_spending) END AS gross_spending,
+                CASE WHEN gross_spending IS NOT NULL THEN sum(d.total_claims)::BIGINT END AS claims,
+                gross_spending / nullif(claims, 0) AS spending_per_claim
+            FROM brands b CROSS JOIN (VALUES (2022), (2024)) y(year)
+            LEFT JOIN medicare_part_d d
+                ON lower(trim(d.brand_name)) = lower(b.brand)
+                AND lower(trim(d.generic_name)) = lower(b.ingredient) AND d.year = y.year
+            GROUP BY product, ingredient, y.year
+        ), endpoints AS (
+            PIVOT annual ON year IN (2022, 2024)
+            USING first(gross_spending) AS spending, first(claims) AS claims,
+                first(spending_per_claim) AS per_claim
+            GROUP BY product, ingredient
+        )
+        SELECT *,
+            ("2024_claims" - "2022_claims") * ("2022_per_claim" + "2024_per_claim") / 2
+                AS volume_effect,
+            ("2024_per_claim" - "2022_per_claim") * ("2022_claims" + "2024_claims") / 2
+                AS per_claim_effect,
+            CASE WHEN "2022_claims" > 0 AND "2024_claims" > 0
+                THEN "2024_spending" - "2022_spending" END AS spending_change
+        FROM endpoints
+        ORDER BY spending_change DESC NULLS LAST, product
+    """).df()
+
+paired = results.dropna(subset=["spending_change"])
+residual = paired.volume_effect + paired.per_claim_effect - paired.spending_change
+
+fig, ax = plt.subplots(figsize=(10, 5.6), layout="constrained")
+y = range(len(paired))
+ax.barh([i - 0.17 for i in y], paired.volume_effect / 1e9, height=0.3,
+        color="#147c80", label="Prescription claim volume")
+ax.barh([i + 0.17 for i in y], paired.per_claim_effect / 1e9, height=0.3,
+        color="#b55327", label="Gross spending per claim")
+ax.set_yticks(y, paired["product"])
+ax.invert_yaxis()
+ax.axvline(0, color="0.4", linewidth=1)
+ax.set(
+    title="Medicare Part D GLP-1 spending change, 2022–2024",
+    xlabel="Contribution to gross spending change ($ billions)",
+)
+ax.legend(loc="lower right")
+omitted = ", ".join(results.loc[results.spending_change.isna(), "product"])
+
+plt.show()
 
 # ---------------------------------------------------
